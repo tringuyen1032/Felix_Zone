@@ -28,15 +28,16 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function LandingPage() {
   return (
-    <RootStyle title="The starting point for your next project | Minimal-UI" id="move_top">
+    <RootStyle title="Home page">
       <LandingHero />
       <ContentStyle>
         <LandingMinimal />
         <LandingHugePackElements />
+        {/* <LandingHugePackElements /> */}
         <LandingDarkMode />
-        <LandingThemeColor />
+        {/* <LandingThemeColor />
         <LandingCleanInterfaces />
-        <LandingAdvertisement />
+        <LandingAdvertisement /> */}
       </ContentStyle>
     </RootStyle>
   );

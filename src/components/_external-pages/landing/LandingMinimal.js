@@ -1,144 +1,137 @@
 // material
-import { alpha, useTheme, styled } from '@material-ui/core/styles';
-import { Box, Grid, Card, Container, Typography, useMediaQuery } from '@material-ui/core';
+import { Box, Card, Container, Typography } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import Slider from 'react-slick';
+import { useRef } from 'react';
+import { useTheme, styled } from '@material-ui/core/styles';
 //
-import { varFadeInUp, MotionInView, varFadeInDown } from '../../animate';
+import { varFadeIn, varFadeInUp, MotionInView } from '../../animate';
+import { CarouselControlsArrowsBasic2 } from '../../carousel';
 
 // ----------------------------------------------------------------------
 
-const CARDS = [
-  {
-    icon: '/static/icons/ic_design.svg',
-    title: 'UI & UX Design',
-    description:
-      'The set is built on the principles of the atomic design system. It helps you to create projects fastest and easily customized packages for your projects.'
-  },
-  {
-    icon: '/static/icons/ic_code.svg',
-    title: 'Development',
-    description: 'Easy to customize and extend each component, saving you time and money.'
-  },
-  {
-    icon: '/static/brand/logo_single.svg',
-    title: 'Branding',
-    description: 'Consistent design in colors, fonts ... makes brand recognition easy.'
-  }
+const MEMBERS = [
+   {
+      name: 'Minh Tú',
+      role: 'Model',
+      avatar: '/static/home/model/1.jpg'
+   },
+   {
+      name: 'Hà Phương',
+      role: 'Model',
+      avatar: '/static/home/model/2.jpg'
+   },
+   {
+      name: 'Kỳ Duyên',
+      role: 'Model',
+      avatar: '/static/home/model/3.jpg'
+   },
+   {
+      name: 'Đỗ Thị Hà',
+      role: 'Model',
+      avatar: '/static/home/model/4.jpeg'
+   },
+   // {
+   //    name: 'Minh Tú',
+   //    role: 'Model',
+   //    avatar: '/static/home/model/1.jpg'
+   // },
+   {
+      name: 'Hà Phương',
+      role: 'Model',
+      avatar: '/static/home/model/2.jpg'
+   },
 ];
 
-const shadowIcon = (color) => `drop-shadow(2px 2px 2px ${alpha(color, 0.48)})`;
+// ----------------------------------------------------------------------
+
+MemberCard.propTypes = {
+   member: PropTypes.object
+};
+
+function MemberCard({ member }) {
+   const { name, role, avatar } = member;
+   return (
+      <Card key={name} sx={{ p: 1, mx: 1.5 }}>
+         <Typography variant="subtitle1" sx={{ mt: 2, mb: 0.5 }}>
+            {name}
+         </Typography>
+         <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
+            {role}
+         </Typography>
+         <Box component="img" src={avatar} sx={{ width: '100%', borderRadius: 1.5 }} />
+      </Card>
+   );
+}
 
 const RootStyle = styled('div')(({ theme }) => ({
-  paddingTop: theme.spacing(15),
-  [theme.breakpoints.up('md')]: {
-    paddingBottom: theme.spacing(15)
-  }
-}));
-
-const CardStyle = styled(Card)(({ theme }) => {
-  const shadowCard = (opacity) =>
-    theme.palette.mode === 'light'
-      ? alpha(theme.palette.grey[500], opacity)
-      : alpha(theme.palette.common.black, opacity);
-
-  return {
-    maxWidth: 380,
-    minHeight: 440,
-    margin: 'auto',
-    textAlign: 'center',
-    padding: theme.spacing(10, 5, 0),
-    boxShadow: `-40px 40px 80px 0 ${shadowCard(0.48)}`,
-    [theme.breakpoints.up('md')]: {
-      boxShadow: 'none',
-      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]
-    },
-    '&.cardLeft': {
-      [theme.breakpoints.up('md')]: { marginTop: -40 }
-    },
-    '&.cardCenter': {
-      [theme.breakpoints.up('md')]: {
-        marginTop: -80,
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: `-40px 40px 80px 0 ${shadowCard(0.4)}`,
-        '&:before': {
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: -1,
-          content: "''",
-          margin: 'auto',
-          position: 'absolute',
-          width: 'calc(100% - 40px)',
-          height: 'calc(100% - 40px)',
-          borderRadius: theme.shape.borderRadiusMd,
-          backgroundColor: theme.palette.background.paper,
-          boxShadow: `-20px 20px 40px 0 ${shadowCard(0.12)}`
-        }
-      }
-    }
-  };
-});
-
-const CardIconStyle = styled('img')(({ theme }) => ({
-  width: 40,
-  height: 40,
-  margin: 'auto',
-  marginBottom: theme.spacing(10),
-  filter: shadowIcon(theme.palette.primary.main)
+   padding: theme.spacing(24, 0),
+   paddingBottom: 0,
+   backgroundImage:
+      theme.palette.mode === 'light'
+         ? `linear-gradient(180deg, #ffe7e9 0%, white 100%)`
+         : 'none'
 }));
 
 // ----------------------------------------------------------------------
 
 export default function LandingMinimalHelps() {
-  const theme = useTheme();
-  const isLight = theme.palette.mode === 'light';
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
+   const theme = useTheme();
+   const carouselRef = useRef();
 
-  return (
-    <RootStyle>
-      <Container maxWidth="lg">
-        <Box sx={{ mb: { xs: 10, md: 25 } }}>
-          <MotionInView variants={varFadeInUp}>
-            <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary', textAlign: 'center' }}>
-              Minimal
-            </Typography>
-          </MotionInView>
-          <MotionInView variants={varFadeInDown}>
-            <Typography variant="h2" sx={{ textAlign: 'center' }}>
-              What minimal helps you?
-            </Typography>
-          </MotionInView>
-        </Box>
+   const settings = {
+      speed: 500,
+      slidesToShow: 4,
+      centerMode: true,
+      centerPadding: '0 80px',
+      rtl: Boolean(theme.direction === 'rtl'),
+      responsive: [
+         {
+            breakpoint: 1279,
+            settings: { slidesToShow: 3 }
+         },
+         {
+            breakpoint: 959,
+            settings: { slidesToShow: 2 }
+         },
+         {
+            breakpoint: 600,
+            settings: { slidesToShow: 1 }
+         }
+      ]
+   };
 
-        <Grid container spacing={isDesktop ? 10 : 5}>
-          {CARDS.map((card, index) => (
-            <Grid key={card.title} item xs={12} md={4}>
-              <MotionInView variants={varFadeInUp}>
-                <CardStyle className={(index === 0 && 'cardLeft') || (index === 1 && 'cardCenter')}>
-                  <CardIconStyle
-                    src={card.icon}
-                    alt={card.title}
-                    sx={{
-                      ...(index === 0 && {
-                        filter: (theme) => shadowIcon(theme.palette.info.main)
-                      }),
-                      ...(index === 1 && {
-                        filter: (theme) => shadowIcon(theme.palette.error.main)
-                      })
-                    }}
-                  />
-                  <Typography variant="h5" paragraph>
-                    {card.title}
-                  </Typography>
-                  <Typography sx={{ color: isLight ? 'text.secondary' : 'common.white' }}>
-                    {card.description}
-                  </Typography>
-                </CardStyle>
-              </MotionInView>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </RootStyle>
-  );
+   const handleNext = () => {
+      carouselRef.current.slickNext();
+   };
+
+   const handlePrevious = () => {
+      carouselRef.current.slickPrev();
+   };
+
+   return (
+      <RootStyle>
+         <Container maxWidth="lg" sx={{ pb: 10, textAlign: 'center' }} >
+            <MotionInView variants={varFadeInUp} style={{ marginTop: 100 }}>
+               <Typography variant="h2" sx={{ mb: 3 }}>
+                  Hot models
+               </Typography>
+            </MotionInView>
+            <Box sx={{ position: 'relative' }} >
+               <Slider ref={carouselRef} {...settings}>
+                  {MEMBERS.map((member) => (
+                     <MotionInView key={member.name} variants={varFadeIn}>
+                        <MemberCard key={member.name} member={member} />
+                     </MotionInView>
+                  ))}
+               </Slider>
+               <CarouselControlsArrowsBasic2
+                  onNext={handleNext}
+                  onPrevious={handlePrevious}
+                  sx={{ transform: 'translateY(-64px)' }}
+               />
+            </Box>
+         </Container>
+      </RootStyle>
+   );
 }

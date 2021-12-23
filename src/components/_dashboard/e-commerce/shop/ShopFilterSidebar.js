@@ -77,7 +77,7 @@ export default function ShopFilterSidebar({ isOpenFilter, onResetFilter, onOpenF
             open={isOpenFilter}
             onClose={onCloseFilter}
             PaperProps={{
-              sx: { width: 280, border: 'none', overflow: 'hidden' }
+              sx: { width: 350, border: 'none', overflow: 'hidden' }
             }}
           >
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ px: 1, py: 2 }}>

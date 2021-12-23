@@ -13,7 +13,7 @@ const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(24, 0),
   backgroundImage:
     theme.palette.mode === 'light'
-      ? `linear-gradient(180deg, ${alpha(theme.palette.grey[300], 0)} 0%, ${theme.palette.grey[300]} 100%)`
+      ? `linear-gradient(180deg, white 0%, #ffe7e9 100%)`
       : 'none'
 }));
 
@@ -47,10 +47,10 @@ const ScreenStyle = styled(MotionInView)(({ theme }) => ({
 }));
 
 const COMMON = {
-  scaleX: 0.86,
+  scaleX: 0.688,
   skewY: 8,
   skewX: 0,
-  scaleY: 1,
+  scaleY: 0.8,
   translateX: 0,
   translateY: 0,
   opacity: 0
@@ -58,7 +58,7 @@ const COMMON = {
 
 const variantScreenLeft = {
   initial: COMMON,
-  animate: { ...COMMON, translateX: '-50%', translateY: 40, opacity: 1 }
+  animate: { ...COMMON, translateX: '-60%', translateY: 40, opacity: 1 }
 };
 const variantScreenCenter = {
   initial: COMMON,
@@ -66,7 +66,7 @@ const variantScreenCenter = {
 };
 const variantScreenRight = {
   initial: COMMON,
-  animate: { ...COMMON, translateX: '50%', translateY: -40, opacity: 1 }
+  animate: { ...COMMON, translateX: '60%', translateY: -40, opacity: 1 }
 };
 
 // ----------------------------------------------------------------------
@@ -86,16 +86,15 @@ export default function LandingHugePackElements() {
         <Grid container spacing={5} justifyContent="center">
           <Grid item xs={12} md={4} sx={{ display: 'flex', alignItems: 'center' }}>
             <ContentStyle>
-              <MotionInView variants={varFadeInUp}>
+              {/* <MotionInView variants={varFadeInUp}>
                 <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary' }}>
                   Interface Starter Kit
                 </Typography>
-              </MotionInView>
+              </MotionInView> */}
 
               <MotionInView variants={varFadeInUp}>
                 <Typography variant="h2" sx={{ mb: 3 }}>
-                  Huge pack <br />
-                  of elements
+                  New models
                 </Typography>
               </MotionInView>
 
@@ -110,7 +109,7 @@ export default function LandingHugePackElements() {
                 </Typography>
               </MotionInView>
 
-              <MotionInView variants={varFadeInUp}>
+              {/* <MotionInView variants={varFadeInUp}>
                 <Button
                   size="large"
                   color="inherit"
@@ -120,7 +119,7 @@ export default function LandingHugePackElements() {
                 >
                   View All Components
                 </Button>
-              </MotionInView>
+              </MotionInView> */}
             </ContentStyle>
           </Grid>
 
@@ -162,7 +161,8 @@ export default function LandingHugePackElements() {
                 >
                   <img
                     alt={`screen ${index + 1}`}
-                    src={`/static/home/screen_${isLight ? 'light' : 'dark'}_${index + 1}.png`}
+                  //   src={`/static/home/screen_${isLight ? 'light' : 'dark'}_${index + 1}.png`}
+                  src={`/static/home/model/${index + 1}.jpg`}
                   />
                 </ScreenStyle>
               ))}

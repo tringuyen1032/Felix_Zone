@@ -1,85 +1,136 @@
+import { Link as RouterLink } from 'react-router-dom';
 // material
-import { styled } from '@material-ui/core/styles';
-import { Box, Grid, Container, Typography } from '@material-ui/core';
+import { alpha, useTheme, styled } from '@material-ui/core/styles';
+import { Box, Grid, Button, Container, Typography } from '@material-ui/core';
+// routes
+import { PATH_PAGE } from '../../../routes/paths';
 //
-import { MotionInView, varFadeInUp, varFadeInDown } from '../../animate';
+import { varFadeInUp, MotionInView } from '../../animate';
+import CarouselBasic2 from '../../carousel/CarouselBasic2';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
-  padding: theme.spacing(28, 0),
-  backgroundColor: theme.palette.grey[900]
+   padding: theme.spacing(24, 0),
+   backgroundImage:
+      theme.palette.mode === 'light'
+         ? `linear-gradient(180deg, #ffe7e9 0%, white 100%)`
+         : 'none'
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
-  textAlign: 'center',
-  position: 'relative',
-  marginBottom: theme.spacing(10),
-  [theme.breakpoints.up('md')]: {
-    height: '100%',
-    marginBottom: 0,
-    textAlign: 'left',
-    display: 'inline-flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'flex-start'
-  }
+   width: '100%',
+   textAlign: 'center',
+   marginBottom: theme.spacing(10),
+   [theme.breakpoints.up('md')]: {
+      textAlign: 'left',
+      marginBottom: 0
+   }
 }));
+
+const ScreenStyle = styled(MotionInView)(({ theme }) => ({
+   paddingRight: 2,
+   paddingBottom: 1,
+   maxWidth: 160,
+   borderRadius: 8,
+   backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 300 : 800],
+   [theme.breakpoints.up('sm')]: {
+      maxWidth: 320,
+      paddingRight: 4,
+      borderRadius: 12
+   },
+   '& img': {
+      borderRadius: 8,
+      [theme.breakpoints.up('sm')]: {
+         borderRadius: 12
+      }
+   }
+}));
+
+const COMMON = {
+   scaleX: -0.688,
+   skewY: 8,
+   skewX: 0,
+   scaleY: 0.8,
+   translateX: 0,
+   translateY: 0,
+   opacity: 0
+};
+
+const variantScreenLeft = {
+   initial: COMMON,
+   animate: { ...COMMON, translateX: '-60%', translateY: -40, opacity: 1 }
+};
+const variantScreenCenter = {
+   initial: COMMON,
+   animate: { ...COMMON, opacity: 1 }
+};
+const variantScreenRight = {
+   initial: COMMON,
+   animate: { ...COMMON, translateX: '60%', translateY: 40, opacity: 1 }
+};
 
 // ----------------------------------------------------------------------
 
-export default function LandingDarkMode() {
-  return (
-    <RootStyle>
-      <Container maxWidth="lg" sx={{ position: 'relative' }}>
-        <Box
-          component="img"
-          alt="image shape"
-          src="/static/home/shape.svg"
-          sx={{
-            top: 0,
-            right: 0,
-            bottom: 0,
-            my: 'auto',
-            position: 'absolute',
-            filter: 'grayscale(1) opacity(48%)',
-            display: { xs: 'none', md: 'block' }
-          }}
-        />
+export default function LandingHugePackElements() {
+   const theme = useTheme();
+   const isLight = theme.palette.mode === 'light';
+   const isRTL = theme.direction === 'rtl';
 
-        <Grid container spacing={5} direction="row-reverse" justifyContent="space-between">
-          <Grid item xs={12} md={4}>
-            <ContentStyle>
-              <MotionInView variants={varFadeInUp}>
-                <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.disabled', display: 'block' }}>
-                  Easy switch between styles.
+   const screenLeftAnimate = variantScreenLeft;
+   const screenCenterAnimate = variantScreenCenter;
+   const screenRightAnimate = variantScreenRight;
+
+   return (
+      <RootStyle>
+         <Container maxWidth="lg">
+            <Grid container spacing={5} justifyContent="center">
+
+
+               <Grid item xs={12} md={8} dir="ltr">
+                  <CarouselBasic2 />
+               </Grid>
+               <Grid item xs={12} md={4} sx={{ display: 'flex', alignItems: 'center' }}>
+                  <ContentStyle>
+                     {/* <MotionInView variants={varFadeInUp}>
+                <Typography component="p" variant="overline" sx={{ mb: 2, color: 'text.secondary' }}>
+                  Interface Starter Kit
                 </Typography>
-              </MotionInView>
+              </MotionInView> */}
 
-              <MotionInView variants={varFadeInUp}>
-                <Typography variant="h2" sx={{ mb: 3, color: 'common.white' }}>
-                  Dark mode
-                </Typography>
-              </MotionInView>
+                     <MotionInView variants={varFadeInUp}>
+                        <Typography variant="h2" sx={{ mb: 3 }} style={{textAlign: 'right'}}>
+                           Event is attracting
+                        </Typography>
+                     </MotionInView>
 
-              <MotionInView variants={varFadeInUp}>
-                <Typography sx={{ color: 'common.white', mb: 5 }}>
-                  A dark theme that feels easier on the eyes.
-                </Typography>
-              </MotionInView>
-            </ContentStyle>
-          </Grid>
+                     <MotionInView variants={varFadeInUp}>
+                        <Typography
+                           sx={{
+                              mb: 5,
+                              color: isLight ? 'text.secondary' : 'common.white'
+                           }}
+                           style={{textAlign: 'right'}}
+                        >
+                           We collected most popular elements. Menu, sliders, buttons, inputs etc. are all here. Just dive in!
+                        </Typography>
+                     </MotionInView>
 
-          <Grid item xs={12} md={7} sx={{ position: 'relative' }}>
-            <MotionInView threshold={0.5} variants={varFadeInUp}>
-              <img alt="light mode" src="/static/home/lightmode.png" />
-            </MotionInView>
-            <MotionInView threshold={0.5} variants={varFadeInDown} sx={{ top: 0, left: 0, position: 'absolute' }}>
-              <img alt="dark mode" src="/static/home/darkmode.png" />
-            </MotionInView>
-          </Grid>
-        </Grid>
-      </Container>
-    </RootStyle>
-  );
+                     {/* <MotionInView variants={varFadeInUp}>
+                <Button
+                  size="large"
+                  color="inherit"
+                  variant="outlined"
+                  component={RouterLink}
+                  to={PATH_PAGE.components}
+                >
+                  View All Components
+                </Button>
+              </MotionInView> */}
+                  </ContentStyle>
+               </Grid>
+            </Grid>
+         </Container>
+      </RootStyle>
+   );
 }

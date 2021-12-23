@@ -49,7 +49,7 @@ const LINKS = [
 
 const RootStyle = styled('div')(({ theme }) => ({
   position: 'relative',
-  backgroundColor: theme.palette.background.default
+  backgroundColor: '#f69cb8'
 }));
 
 // ----------------------------------------------------------------------

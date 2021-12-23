@@ -12,14 +12,32 @@ import { CarouselControlsArrowsIndex } from './controls';
 
 // ----------------------------------------------------------------------
 
-const CAROUSELS = [...Array(5)].map((_, index) => {
-  const setIndex = index + 1;
-  return {
-    title: faker.name.title(),
-    description: faker.lorem.paragraphs(),
-    image: mockImgFeed(setIndex)
-  };
-});
+// const CAROUSELS = [...Array(5)].map((_, index) => {
+//   const setIndex = index + 1;
+//   return {
+//     title: faker.name.title(),
+//     description: faker.lorem.paragraphs(),
+//     image: mockImgFeed(setIndex)
+//   };
+// });
+
+const CAROUSELS = [
+   {
+      title: 'Coca-Cola',
+      description: 'Whoever You Are, Whatever You Do, Wherever You May Be, When You Think of Refreshment Think of Ice Cold Coca-Cola.',
+      image: '/static/home/event/1.jpg'
+   },
+   {
+      title: 'Samsung',
+      description: 'Beam You Up Anytime Anywhere.',
+      image: '/static/home/event/2.jpg'
+   },
+   {
+      title: 'Adidas',
+      description: 'Impossible is Nothing.',
+      image: '/static/home/event/3.jpg'
+   },
+];
 
 CarouselItem.propTypes = {
   item: PropTypes.object
@@ -30,7 +48,7 @@ function CarouselItem({ item }) {
 
   return (
     <>
-      <Box component="img" alt={title} src={image} sx={{ width: '100%', height: 370, objectFit: 'cover' }} />
+      <Box component="img" alt={title} src={image} sx={{ width: '100%', height: 400, objectFit: 'cover' }} />
 
       <CardContent sx={{ textAlign: 'left' }}>
         <Typography variant="h6" noWrap gutterBottom>
